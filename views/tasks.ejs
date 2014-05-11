@@ -44,7 +44,19 @@
 
               collection.fetch({
                   success: function(collection) {
-                      debugger;
+                      var tasksArray = collection.models;
+
+                      var ulList = $('#task_list');
+
+                      tasksArray.forEach(function(taskEntry) {
+                          ulList.append('<li><span id="taskTitle">'+taskEntry.attributes.title+'</span>' +
+                                  '<span id="taskInfos" class="pull-right"> added by <b>' +
+                                  taskEntry.attributes.creation_datetime.toLocaleDateString("en-US") +
+                                  '</span><br /><a id="taskUrl">' + taskEntry.attributes.url +
+                                  '</a></li>');
+                      });
+
+
                   },
                   error: function(collection, error) {
                       // The collection could not be retrieved.
@@ -53,117 +65,121 @@
 
           }
 
-          loadTasks();
+        loadTasks();
 
-          $('#add_task_form').submit(function() {
-              // retrieve the data from the form
-              var author = $('#author').val();
-              var title = $('#title').val();
-              var taskUrl = $('#task_url').val();
+        $('#add_task_form').submit(function() {
+            // retrieve the data from the form
+            var author = $('#author').val();
+            var title = $('#title').val();
+            var taskUrl = $('#task_url').val();
 
-              if (author && title && taskUrl){
-                  // checking the truthy value
-                  // @see http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+            if (author && title && taskUrl){
+                // checking the truthy value
+                // @see http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
 
 
-                  Parse.initialize("k7LH6ot3F4efRvDpv59WynbAuoGkyQLWws4vzPFM", "nrmXLz8TW07tKY7JmhB53xYcJXM5G66HJLfuG4b6");
-                  var TaskObject = Parse.Object.extend("TaskObject");
-                  var taskObject = new TaskObject();
+                Parse.initialize("k7LH6ot3F4efRvDpv59WynbAuoGkyQLWws4vzPFM", "nrmXLz8TW07tKY7JmhB53xYcJXM5G66HJLfuG4b6");
+                var TaskObject = Parse.Object.extend("TaskObject");
+                var taskObject = new TaskObject();
 
-                  taskObject.set("author", author);
-                  taskObject.set("title", title);
-                  taskObject.set("url", taskUrl);
-                  taskObject.set("creation_datetime", new Date());
+                taskObject.set("author", author);
+                taskObject.set("title", title);
+                taskObject.set("url", taskUrl);
+                taskObject.set("creation_datetime", new Date());
 
-                  debugger;
+                taskObject.save(null, {
+                    success: function(taskObject) {
+                        // the task has been saved, update the tasks list
+                        var ulList = $('#task_list');
 
-                  taskObject.save(null, {
-                      success: function(taskObject) {
-                          // the task has been saved, update the tasks list
-                           
+                        ulList.append('<li><span id="taskTitle">'+taskObject.get('title')+'</span>' +
+                              '<span id="taskInfos" class="pull-right"> added by <b>' +
+                              taskObject.get('creation_datetime').toLocaleDateString("en-US") +
+                              '</span><br /><a id="taskUrl">' + taskObject.get('url') +
+                              '</a></li>');
 
-                      },
-                      error: function(taskObject, error) {
-                          // error is a Parse.Error with an error code and description.
-                          console.log('bim');
-                          alert('Failed to create new object, with error code: ' + error.description);
-                      }
-                  });
+                    },
+                    error: function(taskObject, error) {
+                        // error is a Parse.Error with an error code and description.
+                        console.log('bim');
+                        alert('Failed to create new object, with error code: ' + error.description);
+                    }
+                });
               }
 
               return false;
           });
       });
 
-  </script>
+</script>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#"><b>AnyWatch</b></a>
+              <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"><b>AnyWatch</b></a>
 
-          </div>
-          <div class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
-                  <li><a href="#">To never watch "La Brigade" again...</a></li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">You are connected as Guillaume</a></li>
-                  <li><a href="#">More about AnyWatch</a></li>
-              </ul>
-          </div><!--/.nav-collapse -->
-      </div>
-    </div>
-
-
-    <!-- CONTAINER -->
-    <div id="task_container" class="container">
-
-        <!-- add tasks form -->
-        <form class="form-inline text-center" id="add_task_form" >
-            <div class="form-group">
-                <label class="sr-only" for="author">Author</label>
-                <input type="text" class="form-control" id="author" name="author" placeholder="Author"/>
-            </div>
-            <div class="form-group">
-                <label class="sr-only" for="author">Login</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Title"/>
-            </div>
-            <div class="form-group">
-                <label class="sr-only" for="author">Author</label>
-                <input type="text" class="form-control" id="task_url" name="task_url" placeholder="Url"/>
-            </div>
-            <button id="add_task_submit" class="btn btn-primary">Add to watch</button>
-        </form> <!-- end of add tasks form -->
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#">To never watch "La Brigade" again...</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">You are connected as Guillaume</a></li>
+                            <li><a href="#">More about AnyWatch</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+              </div>
 
 
-        <!-- tasks list container -->
-        <div id="tasks_list_container">
-            <%
-            if (tasks !== "undefined"){
-            %> <ul>  <%
+              <!-- CONTAINER -->
+              <div id="task_container" class="container">
+
+                  <!-- add tasks form -->
+                  <form class="form-inline text-center" id="add_task_form" >
+                      <div class="form-group">
+                          <label class="sr-only" for="author">Author</label>
+                          <input type="text" class="form-control" id="author" name="author" placeholder="Author"/>
+                      </div>
+                      <div class="form-group">
+                          <label class="sr-only" for="author">Login</label>
+                          <input type="text" class="form-control" id="title" name="title" placeholder="Title"/>
+                      </div>
+                      <div class="form-group">
+                          <label class="sr-only" for="author">Author</label>
+                          <input type="text" class="form-control" id="task_url" name="task_url" placeholder="Url"/>
+                      </div>
+                      <button id="add_task_submit" class="btn btn-primary">Add to watch</button>
+                  </form> <!-- end of add tasks form -->
+
+
+                  <!-- tasks list container -->
+                  <div id="tasks_list_container">
+                      <%
+                      if (tasks !== "undefined"){
+                      %> <ul id="task_list">  <%
                 for (var i = 0; i < tasks.length; i++) {
                     var taskTitle = tasks[i].title;
                     var author = tasks[i].author;
                     var creationDatetime = tasks[i].creation_datetime;
                     var url = tasks[i].url;
                     // display properties of this
-                %>
-                <li>
-                    <span id="taskTitle"><%= taskTitle %></span>
-                    <span id="taskInfos" class="pull-right">
-                        added by <b><%= author %></b> on <%= creationDatetime.toLocaleDateString("en-US") %>
-                    </span>
-                    <br />
-                    <a id="taskUrl"><%= url %> </a>
-                </li>
-                <%
+                    %>
+                    <li>
+                        <span id="taskTitle"><%= taskTitle %></span>
+                        <span id="taskInfos" class="pull-right">
+                            added by <b><%= author %></b> on <%= creationDatetime.toLocaleDateString("en-US") %>
+                        </span>
+                        <br />
+                        <a id="taskUrl"><%= url %> </a>
+                    </li>
+                    <%
                 }
                 %> </ul>  <%
 
