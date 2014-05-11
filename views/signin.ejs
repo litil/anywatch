@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+      <!-- Parse -->
+      <script src="//www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+  </head>
+  <body>
+
+
+  <script type="text/javascript">
+      // Initialize the Parse object first.
+      Parse.initialize("k7LH6ot3F4efRvDpv59WynbAuoGkyQLWws4vzPFM", "nrmXLz8TW07tKY7JmhB53xYcJXM5G66HJLfuG4b6");
+
+      window.fbAsyncInit = function() {
+          Parse.FacebookUtils.init({
+              appId: '876475645711577' // Facebook App ID
+          });
+
+          Parse.FacebookUtils.logIn(null, {
+              success: function(user) {
+                  if (!user.existed()) {
+                      alert("User signed up and logged in through Facebook!");
+                  } else {
+                      alert("User logged in through Facebook!");
+                  }
+              },
+              error: function(user, error) {
+                  alert("User cancelled the Facebook login or did not fully authorize.");
+              }
+          });
+      };
+      (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/all.js";
+          fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+
+  </script>
+
+
+    <h1><%= title %></h1>
+
+    <div class="fb-login-button" data-scope="email" onclick="fbStatus();">Connect</div>
+
+  </body>
+</html>
