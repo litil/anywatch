@@ -11,11 +11,13 @@ body {
 a {
   color: #00B7FF;
 }
+div.main_container {
+  margin-top: 40px;
+}
 /**********************************************
 *                 3- Tasks                    *
 **********************************************/
 div#task_container form#add_task_form {
-  margin-top: 40px;
   padding: 20px;
   background-color: #ebebeb;
   -webkit-border-radius: 10px;
@@ -36,4 +38,11 @@ div#task_container div#tasks_list_container ul li span#taskTitle {
 div#task_container div#tasks_list_container ul li span#taskInfos {
   font-size: 14px;
   font-weight: italic;
+}
+/**********************************************
+*                 4- About                    *
+**********************************************/
+#about_container p {
+  margin: 60px 0px;
+  font-size: 16px;
 }
