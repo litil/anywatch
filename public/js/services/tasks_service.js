@@ -93,7 +93,6 @@ function saveTask(author, title, url){
     taskObject.save(null, {
         success: function(taskObject) {
             // the task has been saved, update the tasks list
-            debugger;
             addTaskToListView(taskObject.attributes);
         },
         error: function(taskObject, error) {
