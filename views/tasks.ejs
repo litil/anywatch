@@ -22,7 +22,8 @@
     <![endif]-->
 
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/css/style.css' />
+    <script src="/js/services/tasks_service.js"></script>
   </head>
   <body>
 
@@ -32,38 +33,9 @@
 
       $(document).ready(function() {
 
-          function loadTasks() {
-
-              Parse.initialize("k7LH6ot3F4efRvDpv59WynbAuoGkyQLWws4vzPFM", "nrmXLz8TW07tKY7JmhB53xYcJXM5G66HJLfuG4b6");
-
-              var TaskObject = Parse.Object.extend("TaskObject");
-              var TaskCollection = Parse.Collection.extend({
-                  model: TaskObject
-              });
-              var collection = new TaskCollection();
-
-              collection.fetch({
-                  success: function(collection) {
-                      var tasksArray = collection.models;
-
-                      var ulList = $('#task_list');
-
-                      tasksArray.forEach(function(taskEntry) {
-                          ulList.append('<li><span id="taskTitle">'+taskEntry.attributes.title+'</span>' +
-                                  '<span id="taskInfos" class="pull-right"> added by <b>' +
-                                  taskEntry.attributes.creation_datetime.toLocaleDateString("en-US") +
-                                  '</span><br /><a id="taskUrl">' + taskEntry.attributes.url +
-                                  '</a></li>');
-                      });
 
 
-                  },
-                  error: function(collection, error) {
-                      // The collection could not be retrieved.
-                  }
-              });
 
-          }
 
         loadTasks();
 
@@ -73,41 +45,10 @@
             var title = $('#title').val();
             var taskUrl = $('#task_url').val();
 
-            if (author && title && taskUrl){
-                // checking the truthy value
-                // @see http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+            // save the task
+            saveTask(author, title, taskUrl);
 
-
-                Parse.initialize("k7LH6ot3F4efRvDpv59WynbAuoGkyQLWws4vzPFM", "nrmXLz8TW07tKY7JmhB53xYcJXM5G66HJLfuG4b6");
-                var TaskObject = Parse.Object.extend("TaskObject");
-                var taskObject = new TaskObject();
-
-                taskObject.set("author", author);
-                taskObject.set("title", title);
-                taskObject.set("url", taskUrl);
-                taskObject.set("creation_datetime", new Date());
-
-                taskObject.save(null, {
-                    success: function(taskObject) {
-                        // the task has been saved, update the tasks list
-                        var ulList = $('#task_list');
-
-                        ulList.append('<li><span id="taskTitle">'+taskObject.get('title')+'</span>' +
-                              '<span id="taskInfos" class="pull-right"> added by <b>' +
-                              taskObject.get('creation_datetime').toLocaleDateString("en-US") +
-                              '</span><br /><a id="taskUrl">' + taskObject.get('url') +
-                              '</a></li>');
-
-                    },
-                    error: function(taskObject, error) {
-                        // error is a Parse.Error with an error code and description.
-                        console.log('bim');
-                        alert('Failed to create new object, with error code: ' + error.description);
-                    }
-                });
-              }
-
-              return false;
+            return false;
           });
       });
 

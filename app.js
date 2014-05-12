@@ -36,14 +36,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// routes
 app.get('/', routes.index);
 app.get('/login', login.login);
 app.get('/tasks', task.list);
-app.post('/tasks', task.addTask);
-app.get('/signin', login.login);
-app.post('/signin', login.signin);
-app.get('/signup', login.displaySignup);
-app.post('/signup', login.signup);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
