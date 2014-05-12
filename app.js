@@ -9,6 +9,7 @@ var task = require('./routes/tasks');
 var login = require('./routes/login');
 var http = require('http');
 var path = require('path');
+var config = require('./config/config');
 
 var app = express();
 
@@ -19,7 +20,7 @@ express.logger.format('detailed', function(token, req, res){
 app.use(express.logger('detailed'));
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || config.process_port);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
