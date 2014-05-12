@@ -1,131 +1,75 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Parse -->
-    <script src="//www.parsecdn.com/js/parse-1.2.18.min.js"></script>
-
-    <!-- Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/css/style.css' />
-    <script src="/js/services/tasks_service.js"></script>
-  </head>
-  <body>
+<% layout('layout') -%>
+<% script('/js/services/tasks_service.js') -%>
 
 
 <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
 
-    loadTasks();
+        loadTasks();
 
-    $('#add_task_form').submit(function() {
-        // retrieve the data from the form
-        var author = $('#author').val();
-        var title = $('#title').val();
-        var taskUrl = $('#task_url').val();
+        $('#add_task_form').submit(function() {
+            // retrieve the data from the form
+            var author = $('#author').val();
+            var title = $('#title').val();
+            var taskUrl = $('#task_url').val();
 
-        // save the task
-        saveTask(author, title, taskUrl);
+            // save the task
+            saveTask(author, title, taskUrl);
 
-        return false;
-      });
-  });
+            return false;
+        });
+    });
 </script>
 
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/tasks"><b>AnyWatch</b></a>
 
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">To never watch "La Brigade" again...</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">You are connected as Guillaume</a></li>
-                    <li><a href="/about">More about AnyWatch</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
+<!-- CONTAINER -->
+<div id="task_container" class="container main_container">
+
+    <!-- add tasks form -->
+    <form class="form-inline text-center" id="add_task_form" >
+        <div class="form-group">
+            <label class="sr-only" for="author">Author</label>
+            <input type="text" class="form-control" id="author" name="author" placeholder="Author"/>
         </div>
-      </div>
+        <div class="form-group">
+            <label class="sr-only" for="author">Login</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Title"/>
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="author">Author</label>
+            <input type="text" class="form-control" id="task_url" name="task_url" placeholder="Url"/>
+        </div>
+        <button id="add_task_submit" class="btn btn-primary">Add to watch</button>
+    </form> <!-- end of add tasks form -->
 
 
-      <!-- CONTAINER -->
-      <div id="task_container" class="container main_container">
-
-          <!-- add tasks form -->
-          <form class="form-inline text-center" id="add_task_form" >
-              <div class="form-group">
-                  <label class="sr-only" for="author">Author</label>
-                  <input type="text" class="form-control" id="author" name="author" placeholder="Author"/>
-              </div>
-              <div class="form-group">
-                  <label class="sr-only" for="author">Login</label>
-                  <input type="text" class="form-control" id="title" name="title" placeholder="Title"/>
-              </div>
-              <div class="form-group">
-                  <label class="sr-only" for="author">Author</label>
-                  <input type="text" class="form-control" id="task_url" name="task_url" placeholder="Url"/>
-              </div>
-              <button id="add_task_submit" class="btn btn-primary">Add to watch</button>
-          </form> <!-- end of add tasks form -->
-
-
-          <!-- tasks list container -->
-          <div id="tasks_list_container">
-              <%
-              if (tasks !== "undefined"){
-              %> <ul id="task_list">  <%
-                for (var i = 0; i < tasks.length; i++) {
-                    var taskTitle = tasks[i].title;
-                    var author = tasks[i].author;
-                    var creationDatetime = tasks[i].creation_datetime;
-                    var url = tasks[i].url;
-                    // display properties of this
-                    %>
-                    <li>
-                        <span id="taskTitle"><%= taskTitle %></span>
+    <!-- tasks list container -->
+    <div id="tasks_list_container">
+        <%
+        if (tasks !== "undefined"){
+        %> <ul id="task_list">  <%
+            for (var i = 0; i < tasks.length; i++) {
+                var taskTitle = tasks[i].title;
+                var author = tasks[i].author;
+                var creationDatetime = tasks[i].creation_datetime;
+                var url = tasks[i].url;
+                // display properties of this
+            %>
+            <li>
+                <span id="taskTitle"><%= taskTitle %></span>
                         <span id="taskInfos" class="pull-right">
                             added by <b><%= author %></b> on <%= creationDatetime.toLocaleDateString("en-US") %>
                         </span>
-                        <br />
-                        <a id="taskUrl"><%= url %> </a>
-                    </li>
-                    <%
-                }
-                %> </ul>  <%
-
+                <br />
+                <a id="taskUrl"><%= url %> </a>
+            </li>
+            <%
             }
-            %>
+            %> </ul>  <%
 
-        </div> <!-- end of tasks list container -->
+        }
+        %>
 
-    </div><!-- end of CONTAINER -->
+    </div> <!-- end of tasks list container -->
 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/js/bootstrap.min.js"></script>
-
-  </body>
-</html>
+</div><!-- end of CONTAINER -->

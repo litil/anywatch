@@ -4,6 +4,7 @@
  */
 
 var express = require('express');
+var engine = require('ejs-locals');
 var routes = require('./routes');
 var task = require('./routes/tasks');
 var login = require('./routes/login');
@@ -23,7 +24,12 @@ app.use(express.logger('detailed'));
 // all environments
 app.set('port', process.env.PORT || config.process_port);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+
+// use ejs-locals for all ejs templates:
+app.engine('ejs', engine);
+app.set('views',__dirname + '/views');
+app.set('view engine', 'ejs'); // so you can render('index')
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
