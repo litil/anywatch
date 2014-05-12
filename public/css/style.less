@@ -1,0 +1,67 @@
+/**********************************************
+*        1- Variables & Mixins                *
+**********************************************/
+
+@grey: #808080;
+@extra_light_grey: #ebebeb;
+@light_grey: #bebebe;
+@dark_grey: #414141;
+
+
+.rounded(@radius: 2px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+
+/**********************************************
+*                2- Common                    *
+**********************************************/
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+
+/**********************************************
+*                 3- Tasks                    *
+**********************************************/
+div#task_container {
+
+  form#add_task_form  {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: @extra_light_grey;
+    .rounded(10px);
+  }
+
+  div#tasks_list_container{
+    ul {
+      margin: 40px;
+      list-style-type: none;
+      li {
+        margin: 0px 0px 40px 0px;
+
+        span#taskTitle{
+          font-size: 18px;
+          font-weight: bold;
+        }
+        span#taskInfos{
+          font-size: 14px;
+          font-weight: italic;
+        }
+        a#taskUrl {
+
+        }
+
+      }
+    }
+  }
+
+}
