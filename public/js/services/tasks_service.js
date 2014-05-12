@@ -82,8 +82,6 @@ function saveTask(author, title, url){
     var TaskObject = Parse.Object.extend("TaskObject");
     var taskObject = new TaskObject();
 
-
-
     // set the data into the object
     taskObject.set("author", author);
     taskObject.set("title", title);
