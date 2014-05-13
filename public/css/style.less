@@ -10,6 +10,13 @@
 @black: #000000;
 
 
+@light_yellow: #fffebe;
+@yellow: #ffee55;
+@light_orange: #ffc044;
+@orange: #ff872f;
+@red: #ff2f0d;
+
+
 .rounded(@radius: 2px) {
   -webkit-border-radius: @radius;
   -moz-border-radius: @radius;
@@ -57,10 +64,35 @@ div#task_container {
         background-color: @extra_light_blue;
         .rounded(10px);
 
-        > div#title_stars{
-          margin-bottom : 15px;
+        > div#title_delete{
+          margin-bottom : 5px;
           a {
             &:visited, &:hover, &:active, & {color: @black;}
+          }
+        }
+
+        div#rating_container {
+          margin-bottom: 15px;
+          div {
+            ul#rating {
+              list-style:none;
+              padding-left: 0px;
+              li {
+                display:inline !important;
+                float:left;
+                margin-right: 5px;
+
+                a{
+                  display:block;
+                  width:20px;
+                  height:20px;
+                  border:1px solid @light_grey;
+                  background-color: @extra_light_grey;
+                  text-indent:-9999px;
+                  .rounded(5px);
+                }
+              }
+            }
           }
         }
 
@@ -71,8 +103,8 @@ div#task_container {
     }
 
   }
-
 }
+
 
 
 /**********************************************

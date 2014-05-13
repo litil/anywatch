@@ -3,18 +3,30 @@
  *
  * @param taskObject represents a task
  */
-function addTaskToListView(taskObject){
+function addTaskToListView(taskObject, taskObjectId){
     var taskListContainer = $('#tasks_list_container');
+
     taskListContainer.prepend('' +
         '<div class="col-md-4 ">' +
             ' <div class="task_container">' +
-                '<div id="title_stars" class="row">' +
+                '<div id="title_delete" class="row">' +
                     '<div class="col-md-9">' +
                         '<a href="'+taskObject.url+'"><b>'+taskObject.title+'</b></a>' +
                     ' </div>' +
                     '<div class="col-md-3 pull-right">' +
-                        'Stars' +
+                        '<a href="#">delete</a>' +
                     '</div>' +
+                '</div>' +
+                '<div id="rating_container" class="row">' +
+                    '<div class="col-md-12">' +
+                        '<ul id="rating" class="'+taskObjectId+'">' +
+                            '<li><a href="#" class="rating_link">This is just a piece of crap</a></li>' +
+                            '<li><a href="#" class="rating_link">Nothing too new or interesting</a></li>' +
+                            '<li><a href="#" class="rating_link">Not bad, I like it</a></li>' +
+                            '<li><a href="#" class="rating_link">I would like to see more of this</a></li>' +
+                            '<li><a href="#" class="rating_link">This is the best thing I ve seen</a></li>' +
+                        '</ul>' +
+                    ' </div>' +
                 '</div>' +
                 '<div id="description" class="row">' +
                     '<div class="col-md-12">' +
@@ -23,6 +35,99 @@ function addTaskToListView(taskObject){
                 ' </div>' +
             '</div> ' +
         '</div>');
+
+
+
+    // Variable to set the duration of the animation
+    var animationTime = 500;
+
+    // Variable to store the colours
+    var colours = ["fffebe", "ffee55", "ffc044", "ff872f", "ff2f0d"];
+
+    // Function to colorize the right ratings
+    var colourizeRatings = function(nrOfRatings, ulList) {
+        debugger;
+        ulList.children().each(function() {
+            if($(this).parent().index() <= nrOfRatings) {
+                $(this).stop().animate({ backgroundColor : "#" + colours[nrOfRatings] } , animationTime);
+            }
+        });
+    };
+
+    // Handle the hover events
+    $("#rating li a").hover(function() {
+        // Call the colourize function with the given index
+        //colourizeRatings($(this).parent().index(), $(this).parent().parent());
+
+        var ulList = $(this).parent().parent();
+        var hoveredIndex = $(this).parent().index();
+
+        ulList.children().each(function() {
+            if($(this).index() <= hoveredIndex) {
+                //debugger;
+                $(this).children(":first").css('background-color', "#" + colours[hoveredIndex] );
+                //$(this).stop().animate({ backgroundColor : "#" + colours[hoveredIndex] } , animationTime);
+            } else {
+                $(this).children(":first").css('background-color', "#ebebeb");
+            }
+        });
+
+    }, function() {
+        // Restore all the rating to their original colours
+        $(this).children(":first").css('background-color', "#ebebeb");
+        //$("#rating li a").stop().animate({ backgroundColor : "#333" } , animationTime);
+    });
+
+    // Prevent the click event and show the rating
+    $("#rating li a").click(function(e) {
+        e.preventDefault();
+
+        // get the taskObject id
+        var taskObjectId = $(this).parent().parent().attr('class');
+        var rating_index = $(this).parent().index();
+
+        // update the task object
+        Parse.initialize("k7LH6ot3F4efRvDpv59WynbAuoGkyQLWws4vzPFM", "nrmXLz8TW07tKY7JmhB53xYcJXM5G66HJLfuG4b6");
+        var TaskObject = Parse.Object.extend("TaskObject");
+        var taskObject = new TaskObject();
+        taskObject.id = taskObjectId;
+        taskObject.set("rating", rating_index);
+
+        taskObject.save(null, {
+            success: function(point) {
+                // Saved successfully.
+                debugger;
+            },
+            error: function(point, error) {
+                // The save failed.
+                // error is a Parse.Error with an error code and description.
+                debugger;
+            }
+        });
+
+        /*
+        var query = new Parse.Query(TaskObject);
+        query.get(taskObjectId, {
+            success: function(taskObject) {
+                debugger;
+                taskObject.set("rating", rating_index);
+                taskObject.save(null, {
+                    success: function(taskObject) {
+                        // the task has been updated
+                        debugger;
+                        alert("You voted on item number " + ($(this).parent().index() + 1));
+                    },
+                    error: function(taskObject, error) {
+                        debugger;
+                        // error is a Parse.Error with an error code and description.
+                        alert('Failed to update object, with error code: ' + error.description);
+                    }
+                });
+            },
+            error: function(object, error) { }
+        });
+        */
+    });
 }
 
 /**
@@ -45,7 +150,7 @@ function loadTasks() {
         success: function(collection) {
             var tasksArray = collection.models;
             tasksArray.forEach(function(taskEntry) {
-                addTaskToListView(taskEntry.attributes);
+                addTaskToListView(taskEntry.attributes, taskEntry.id);
             });
         },
         error: function(collection, error) {
@@ -90,11 +195,12 @@ function saveTask(author, title, url){
     taskObject.set("title", title);
     taskObject.set("url", url);
     taskObject.set("creation_datetime", new Date());
+    taskObject.set("rating", -1);
 
     taskObject.save(null, {
         success: function(taskObject) {
             // the task has been saved, update the tasks list
-            addTaskToListView(taskObject.attributes);
+            addTaskToListView(taskObject.attributes, taskObject.id);
         },
         error: function(taskObject, error) {
             // error is a Parse.Error with an error code and description.

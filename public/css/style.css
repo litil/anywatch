@@ -33,14 +33,37 @@ div#task_container div#tasks_list_container div div.task_container {
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-div#task_container div#tasks_list_container div div.task_container > div#title_stars {
+div#task_container div#tasks_list_container div div.task_container > div#title_delete {
+  margin-bottom: 5px;
+}
+div#task_container div#tasks_list_container div div.task_container > div#title_delete a:visited,
+div#task_container div#tasks_list_container div div.task_container > div#title_delete a:hover,
+div#task_container div#tasks_list_container div div.task_container > div#title_delete a:active,
+div#task_container div#tasks_list_container div div.task_container > div#title_delete a {
+  color: #000000;
+}
+div#task_container div#tasks_list_container div div.task_container div#rating_container {
   margin-bottom: 15px;
 }
-div#task_container div#tasks_list_container div div.task_container > div#title_stars a:visited,
-div#task_container div#tasks_list_container div div.task_container > div#title_stars a:hover,
-div#task_container div#tasks_list_container div div.task_container > div#title_stars a:active,
-div#task_container div#tasks_list_container div div.task_container > div#title_stars a {
-  color: #000000;
+div#task_container div#tasks_list_container div div.task_container div#rating_container div ul#rating {
+  list-style: none;
+  padding-left: 0px;
+}
+div#task_container div#tasks_list_container div div.task_container div#rating_container div ul#rating li {
+  display: inline !important;
+  float: left;
+  margin-right: 5px;
+}
+div#task_container div#tasks_list_container div div.task_container div#rating_container div ul#rating li a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #bebebe;
+  background-color: #ebebeb;
+  text-indent: -9999px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 div#task_container div#tasks_list_container div div.task_container > div#description {
   font-size: 12px;
