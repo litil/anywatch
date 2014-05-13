@@ -4,23 +4,26 @@
  * @param taskObject represents a task
  */
 function addTaskToListView(taskObject){
-    var ulList = $('#task_list');
-    ulList.prepend('' +
-        '<li>' +
-            '<span id="taskTitle">'+taskObject.title+'</span>' +
-            '<span id="taskInfos" class="pull-right"> ' +
-                'added by <b>' + taskObject.author + '</b>' +
-            '</span>' +
-            '<br />' +
-            '<a id="taskUrl" href="'+taskObject.url+'" target="_blank">' +
-                taskObject.url +
-            '</a>' +
-            '<span id="taskInfos" class="pull-right"> ' +
-                taskObject.creation_datetime.toLocaleDateString("en-US") +
-            '</span>' +
-        '</li>');
+    var taskListContainer = $('#tasks_list_container');
+    taskListContainer.prepend('' +
+        '<div class="col-md-4 ">' +
+            ' <div class="task_container">' +
+                '<div id="title_stars" class="row">' +
+                    '<div class="col-md-9">' +
+                        '<a href="'+taskObject.url+'"><b>'+taskObject.title+'</b></a>' +
+                    ' </div>' +
+                    '<div class="col-md-3 pull-right">' +
+                        'Stars' +
+                    '</div>' +
+                '</div>' +
+                '<div id="description" class="row">' +
+                    '<div class="col-md-12">' +
+                        '<i>added by <b>' + taskObject.author + '</b> on ' + taskObject.creation_datetime.toLocaleDateString("en-US") + '</i>' +
+                    '</div>' +
+                ' </div>' +
+            '</div> ' +
+        '</div>');
 }
-
 
 /**
  * This method loads the tasks from Parse and

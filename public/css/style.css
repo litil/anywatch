@@ -19,25 +19,31 @@ div.main_container {
 **********************************************/
 div#task_container form#add_task_form {
   padding: 20px;
+  margin-bottom: 30px;
   background-color: #ebebeb;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-div#task_container div#tasks_list_container ul {
-  margin: 40px;
-  list-style-type: none;
+div#task_container div#tasks_list_container div div.task_container {
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #d1e3eb;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
-div#task_container div#tasks_list_container ul li {
-  margin: 0px 0px 40px 0px;
+div#task_container div#tasks_list_container div div.task_container > div#title_stars {
+  margin-bottom: 15px;
 }
-div#task_container div#tasks_list_container ul li span#taskTitle {
-  font-size: 18px;
-  font-weight: bold;
+div#task_container div#tasks_list_container div div.task_container > div#title_stars a:visited,
+div#task_container div#tasks_list_container div div.task_container > div#title_stars a:hover,
+div#task_container div#tasks_list_container div div.task_container > div#title_stars a:active,
+div#task_container div#tasks_list_container div div.task_container > div#title_stars a {
+  color: #000000;
 }
-div#task_container div#tasks_list_container ul li span#taskInfos {
-  font-size: 14px;
-  font-weight: italic;
+div#task_container div#tasks_list_container div div.task_container > div#description {
+  font-size: 12px;
 }
 /**********************************************
 *                 4- About                    *

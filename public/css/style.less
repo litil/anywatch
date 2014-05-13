@@ -6,6 +6,8 @@
 @extra_light_grey: #ebebeb;
 @light_grey: #bebebe;
 @dark_grey: #414141;
+@extra_light_blue: #d1e3eb;
+@black: #000000;
 
 
 .rounded(@radius: 2px) {
@@ -40,31 +42,34 @@ div#task_container {
 
   form#add_task_form  {
     padding: 20px;
+    margin-bottom: 30px;
     background-color: @extra_light_grey;
     .rounded(10px);
   }
 
   div#tasks_list_container{
-    ul {
-      margin: 40px;
-      list-style-type: none;
-      li {
-        margin: 0px 0px 40px 0px;
 
-        span#taskTitle{
-          font-size: 18px;
-          font-weight: bold;
-        }
-        span#taskInfos{
-          font-size: 14px;
-          font-weight: italic;
-        }
-        a#taskUrl {
+    div {
 
+      div.task_container{
+        margin-bottom: 30px;
+        padding: 15px;
+        background-color: @extra_light_blue;
+        .rounded(10px);
+
+        > div#title_stars{
+          margin-bottom : 15px;
+          a {
+            &:visited, &:hover, &:active, & {color: @black;}
+          }
         }
 
+        > div#description{
+          font-size: 12px;
+        }
       }
     }
+
   }
 
 }

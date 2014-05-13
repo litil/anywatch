@@ -44,32 +44,9 @@
 
 
     <!-- tasks list container -->
-    <div id="tasks_list_container">
-        <%
-        if (tasks !== "undefined"){
-        %> <ul id="task_list">  <%
-            for (var i = 0; i < tasks.length; i++) {
-                var taskTitle = tasks[i].title;
-                var author = tasks[i].author;
-                var creationDatetime = tasks[i].creation_datetime;
-                var url = tasks[i].url;
-                // display properties of this
-            %>
-            <li>
-                <span id="taskTitle"><%= taskTitle %></span>
-                        <span id="taskInfos" class="pull-right">
-                            added by <b><%= author %></b> on <%= creationDatetime.toLocaleDateString("en-US") %>
-                        </span>
-                <br />
-                <a id="taskUrl"><%= url %> </a>
-            </li>
-            <%
-            }
-            %> </ul>  <%
+    <div id="tasks_list_container" class="row">
 
-        }
-        %>
+    </div> <!-- end tasks list container -->
 
-    </div> <!-- end of tasks list container -->
 
 </div><!-- end of CONTAINER -->
