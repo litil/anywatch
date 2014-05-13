@@ -5,7 +5,7 @@
  */
 function addTaskToListView(taskObject){
     var ulList = $('#task_list');
-    ulList.append('' +
+    ulList.prepend('' +
         '<li>' +
             '<span id="taskTitle">'+taskObject.title+'</span>' +
             '<span id="taskInfos" class="pull-right"> ' +
