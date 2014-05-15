@@ -106,8 +106,11 @@ function addTaskToListView(taskObject, taskObjectId){
         });
     });
 
-
-    //colourizeRatings();
+    // get the current ul
+    var ulList = $('#'+taskObjectId+'');
+    var currentRating = taskObject.rating;
+    console.log(currentRating);
+    colourizeRatings(currentRating, ulList);
 }
 
 /**
