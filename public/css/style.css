@@ -45,16 +45,16 @@ div#task_container div#tasks_list_container div div.task_container > div#title_d
 div#task_container div#tasks_list_container div div.task_container div#rating_container {
   margin-bottom: 15px;
 }
-div#task_container div#tasks_list_container div div.task_container div#rating_container div ul#rating {
+div#task_container div#tasks_list_container div div.task_container div#rating_container div ul.rating {
   list-style: none;
   padding-left: 0px;
 }
-div#task_container div#tasks_list_container div div.task_container div#rating_container div ul#rating li {
+div#task_container div#tasks_list_container div div.task_container div#rating_container div ul.rating li {
   display: inline !important;
   float: left;
   margin-right: 5px;
 }
-div#task_container div#tasks_list_container div div.task_container div#rating_container div ul#rating li a {
+div#task_container div#tasks_list_container div div.task_container div#rating_container div ul.rating li a {
   display: block;
   width: 20px;
   height: 20px;

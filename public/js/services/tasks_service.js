@@ -19,7 +19,7 @@ function addTaskToListView(taskObject, taskObjectId){
                 '</div>' +
                 '<div id="rating_container" class="row">' +
                     '<div class="col-md-12">' +
-                        '<ul id="rating" class="'+taskObjectId+'">' +
+                        '<ul id="'+taskObjectId+'" class="rating">' +
                             '<li><a href="#" class="rating_link">This is just a piece of crap</a></li>' +
                             '<li><a href="#" class="rating_link">Nothing too new or interesting</a></li>' +
                             '<li><a href="#" class="rating_link">Not bad, I like it</a></li>' +
@@ -55,7 +55,7 @@ function addTaskToListView(taskObject, taskObjectId){
     };
 
     // Handle the hover events
-    $("#rating li a").hover(function() {
+    $(".rating li a").hover(function() {
         // Call the colourize function with the given index
         //colourizeRatings($(this).parent().index(), $(this).parent().parent());
 
@@ -79,11 +79,11 @@ function addTaskToListView(taskObject, taskObjectId){
     });
 
     // Prevent the click event and show the rating
-    $("#rating li a").click(function(e) {
+    $(".rating li a").click(function(e) {
         e.preventDefault();
 
         // get the taskObject id
-        var taskObjectId = $(this).parent().parent().attr('class');
+        var taskObjectId = $(this).parent().parent().attr('id');
         var rating_index = $(this).parent().index();
 
         // update the task object
@@ -104,30 +104,10 @@ function addTaskToListView(taskObject, taskObjectId){
                 debugger;
             }
         });
-
-        /*
-        var query = new Parse.Query(TaskObject);
-        query.get(taskObjectId, {
-            success: function(taskObject) {
-                debugger;
-                taskObject.set("rating", rating_index);
-                taskObject.save(null, {
-                    success: function(taskObject) {
-                        // the task has been updated
-                        debugger;
-                        alert("You voted on item number " + ($(this).parent().index() + 1));
-                    },
-                    error: function(taskObject, error) {
-                        debugger;
-                        // error is a Parse.Error with an error code and description.
-                        alert('Failed to update object, with error code: ' + error.description);
-                    }
-                });
-            },
-            error: function(object, error) { }
-        });
-        */
     });
+
+
+    //colourizeRatings();
 }
 
 /**
